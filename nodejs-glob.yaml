@@ -1,0 +1,4 @@
+version_control: github
+src_repo: isaacs/node-glob
+tag_prefix: "^"
+seperator: "."
