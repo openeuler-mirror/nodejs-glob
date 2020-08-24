@@ -1,0 +1,46 @@
+commit 8829452ae5502eef21846d86609f15dc47c56044
+Author: Tom Hughes <tom@compton.nu>
+Date:   Fri Jan 1 11:19:26 2016 +0000
+
+    Fix tests to work with older version of tap
+
+diff --git a/test/global-leakage.js b/test/global-leakage.js
+index 238990c..7843495 100644
+--- a/test/global-leakage.js
++++ b/test/global-leakage.js
+@@ -1,5 +1,5 @@
+ if (require.main === module)
+-  return require('tap').pass('ok')
++  return require('tap').test('').pass('ok')
+ 
+ var before = Object.keys(global).sort().filter(function (t) {
+   return t !== '__coverage__'
+diff --git a/test/multiple-weird-error.js b/test/multiple-weird-error.js
+index 4a9e45e..9285dfb 100644
+--- a/test/multiple-weird-error.js
++++ b/test/multiple-weird-error.js
+@@ -1,4 +1,4 @@
+-var t = require('tap')
++var tap = require('tap')
+ var fs = require('fs')
+ fs.readdir = function(path, cb) { cb(new Error('expected')) }
+ var glob = require('../')
+@@ -6,10 +6,12 @@ var glob = require('../')
+ // also test that silent:true is actually silent!
+ console.error = function () { throw 'SILENCE, INSECT!' }
+ 
+-t.plan(2)
+-glob('*', { silent: true }, function(err, files) {
+-  t.ok(err, 'got first error')
+-})
+-glob('*', { silent: true }, function(err, files) {
+-  t.ok(err, 'got second error')
++tap.test("unexpected errors", function (t) {
++  t.plan(2)
++  glob('*', { silent: true }, function(err, files) {
++    t.ok(err, 'got first error')
++  })
++  glob('*', { silent: true }, function(err, files) {
++    t.ok(err, 'got second error')
++  })
+ })
