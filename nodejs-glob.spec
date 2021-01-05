@@ -2,9 +2,9 @@
 %global enable_tests 1
 Name:                nodejs-glob
 Version:             6.0.4
-Release:             1
+Release:             2
 Summary:             A little globber for Node.js
-License:             BSD
+License:             ISC
 URL:                 https://github.com/isaacs/node-glob
 Source0:             https://github.com/isaacs/node-glob/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0:              nodejs-glob-tap.patch
@@ -43,5 +43,8 @@ cp -pr package.json glob.js sync.js common.js \
 %{nodejs_sitelib}/glob
 
 %changelog
+* Tue Jan 05 2020 huanghaitao <huanghaitao8@huawei.com> - 6.0.4-2
+- Modify Spec file to make license consistent
+
 * Thu Aug 20 2020 Anan Fu <fuanan3@huawei.com> - 6.0.4-1
 - package init
